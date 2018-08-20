@@ -44,8 +44,8 @@ public class Main2Activity extends AppCompatActivity {
 
     public void btnsign(View v) throws NoSuchAlgorithmException {
 
-     //   Register register= new Register();
-      //  register.execute();
+        Register register= new Register();
+      register.execute();
 
 
 
@@ -139,9 +139,29 @@ public class Main2Activity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            Alertastorj alertastorj = new Alertastorj();
 
+            Log.d("mensaje",s);
 
-            Log.d("mensaje final",s);
+            String email ="{"+'"'+"error"+'"'+":"+'"'+"Email is already registered"+'"'+"}";
+            Log.d("email",email);
+            switch (s) {
+
+                case "null":
+
+                    alertastorj.setMensaje("Registro Exitoso\n" +
+                            "Revise su correo y confirme");
+                    alertastorj.show(getFragmentManager(), "hola");
+                    break;
+
+                case "":
+                    alertastorj.setMensaje("El correo ya esta registrado");
+                    alertastorj.show(getFragmentManager(), "hola");
+
+                    break;
+
+            }
+
 
         }
     }

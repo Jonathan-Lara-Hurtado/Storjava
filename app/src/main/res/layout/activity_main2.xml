@@ -31,7 +31,7 @@
         android:layout_marginEnd="81dp"
         android:layout_marginStart="7dp"
         android:layout_marginTop="52dp"
-        android:background="#ffff"
+        android:background="@drawable/round_inputtex"
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/txtpassword"
