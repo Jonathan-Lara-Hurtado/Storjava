@@ -9,4 +9,9 @@
     <string name="email">Email</string>
     <string name="Password">Password</string>
     <string name="btn_register">sign in</string>
+    <string name="email_alert">Must supply an email</string>
+    <string name="Existing_email">Email is already registered</string>
+    <string name="white_password">white password</string>
+    <string name="Invalid_Email">InvalidEmail</string>
+    <string name="Successful_registration">Successful registration Please check your email</string>
 </resources>

@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextPaint;
+import android.util.JsonReader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +46,36 @@ public class Main2Activity extends AppCompatActivity {
     public void btnsign(View v) throws NoSuchAlgorithmException {
 
         Register register= new Register();
-      register.execute();
+
+        Alertastorj alertastorj = new Alertastorj();
+        email = (EditText) findViewById(R.id.txtemail);
+        password =(EditText)findViewById(R.id.txtpassword);
+
+        if(email.getText().toString().isEmpty()){
+
+            alertastorj.setMensaje(getString(R.string.email_alert));
+            alertastorj.show(getFragmentManager(),null);
+
+
+        }else {
+
+
+
+            if (password.getText().toString().isEmpty()) {
+
+                alertastorj.setMensaje(getString(R.string.white_password));
+                alertastorj.show(getFragmentManager(),null);
+
+
+            }else{
+
+                register.execute();
+
+            }
+
+
+        }
+
 
 
 
@@ -140,26 +170,42 @@ public class Main2Activity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Alertastorj alertastorj = new Alertastorj();
+            try {
 
-            Log.d("mensaje",s);
+                Log.d("mensajesinjson",s);
 
-            String email ="{"+'"'+"error"+'"'+":"+'"'+"Email is already registered"+'"'+"}";
-            Log.d("email",email);
-            switch (s) {
+                JSONObject mensajejson = new JSONObject(s);
+                Log.d("mensajejson",mensajejson.getString("error"));
 
-                case "null":
+                switch (mensajejson.getString("error")){
 
-                    alertastorj.setMensaje("Registro Exitoso\n" +
-                            "Revise su correo y confirme");
-                    alertastorj.show(getFragmentManager(), "hola");
-                    break;
+                    case "Must supply an email":
+                        alertastorj.setMensaje(getString(R.string.email_alert));
+                        alertastorj.show(getFragmentManager(),null);
+                        break;
 
-                case "":
-                    alertastorj.setMensaje("El correo ya esta registrado");
-                    alertastorj.show(getFragmentManager(), "hola");
+                    case "Email is already registered":
+                        alertastorj.setMensaje(getString(R.string.Existing_email));
+                        alertastorj.show(getFragmentManager(),null);
+                        break;
 
-                    break;
+                    case "Invalid email":
+                        alertastorj.setMensaje(getString(R.string.Invalid_Email));
+                        alertastorj.show(getFragmentManager(),null);
+                        break;
 
+                        default:
+                            break;
+                }
+            }catch (Throwable t){
+                //t.getCause();
+                alertastorj.setMensaje(getString(R.string.Successful_registration));
+                alertastorj.show(getFragmentManager(),null);
+                email = (EditText) findViewById(R.id.txtemail);
+                email.setText("");
+                password =(EditText)findViewById(R.id.txtpassword);
+                password.setText("");
+                //Log.e("App","error");
             }
 
 
